@@ -1,14 +1,66 @@
 
-import React, { useState } from 'react';
-import { ExternalLink, Play } from "lucide-react";
+import React, { useState, useRef, useEffect } from 'react';
+import { ExternalLink, Play, Pause, VolumeX, Volume2 } from "lucide-react";
 import { Link } from 'react-router-dom';
 
 const DemoPreview: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Demo video
+  const videoSrc = "https://assets.mixkit.co/videos/preview/mixkit-laboratory-glassware-close-up-12752-large.mp4";
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
+  
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+  
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    
+    if (videoElement) {
+      const handleTimeUpdate = () => {
+        const percent = (videoElement.currentTime / videoElement.duration) * 100;
+        setProgress(percent);
+      };
+      
+      const handleLoadedData = () => {
+        setIsLoading(false);
+      };
+      
+      const handleEnded = () => {
+        setIsPlaying(false);
+        setProgress(0);
+        videoElement.currentTime = 0;
+      };
+      
+      videoElement.addEventListener('timeupdate', handleTimeUpdate);
+      videoElement.addEventListener('loadeddata', handleLoadedData);
+      videoElement.addEventListener('ended', handleEnded);
+      
+      return () => {
+        videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+        videoElement.removeEventListener('loadeddata', handleLoadedData);
+        videoElement.removeEventListener('ended', handleEnded);
+      };
+    }
+  }, []);
 
   return (
     <section id="demo" className="section-padding relative overflow-hidden">
@@ -21,37 +73,70 @@ const DemoPreview: React.FC = () => {
           </p>
         </div>
         
-        <div className="relative max-w-4xl mx-auto">
-          {/* Video/image placeholder */}
+        <div className="relative max-w-4xl mx-auto group">
+          {/* Video player */}
           <div className="relative aspect-video overflow-hidden rounded-xl card-glass shadow-xl">
-            {/* Video placeholder */}
-            <div className="absolute inset-0 bg-gradient-to-br from-moleculens-dark to-moleculens-darker flex items-center justify-center">
-              {/* Play button */}
+            {/* Video element */}
+            <video 
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover"
+              src={videoSrc}
+              muted={isMuted}
+              playsInline
+              poster="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1280&auto=format"
+            />
+            
+            {/* Play/pause overlay */}
+            <div 
+              className={`absolute inset-0 bg-gradient-to-b from-transparent to-black/50 flex items-center justify-center transition-opacity duration-300 ${isPlaying && !isLoading ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}
+            >
+              {/* Play/pause button */}
               <button 
                 onClick={togglePlay}
-                className={`w-20 h-20 rounded-full bg-white/10 flex items-center justify-center border border-white/20 transition-all hover:bg-white/20 hover:scale-110 ${isPlaying ? 'scale-90 opacity-0' : ''}`}
+                className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center border border-white/20 transition-all hover:bg-white/20 hover:scale-110"
               >
-                <Play className="w-8 h-8 text-white ml-1" />
+                {isLoading ? (
+                  <div className="w-8 h-8 border-4 border-white/80 border-t-transparent rounded-full animate-spin"></div>
+                ) : isPlaying ? (
+                  <Pause className="w-8 h-8 text-white" />
+                ) : (
+                  <Play className="w-8 h-8 text-white ml-1" />
+                )}
               </button>
             </div>
             
-            {isPlaying && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 border-4 border-moleculens-primary/80 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            )}
-            
             {/* AR overlay mockup */}
-            <div className="absolute bottom-4 left-4 p-3 bg-black/40 backdrop-blur-md rounded-lg flex items-center gap-2 border border-white/10 animate-pulse">
+            <div className="absolute bottom-14 md:bottom-4 left-4 p-3 bg-black/40 backdrop-blur-md rounded-lg flex items-center gap-2 border border-white/10 animate-pulse">
               <Scan className="h-6 w-6 text-moleculens-primary" />
               <span>AR Mode Active</span>
+            </div>
+            
+            {/* Video controls */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Progress bar */}
+              <div className="relative h-1 w-full bg-white/20 rounded-full mb-4 cursor-pointer">
+                <div 
+                  className="absolute h-full bg-moleculens-primary rounded-full"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <button onClick={toggleMute} className="text-white/80 hover:text-white">
+                  {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                </button>
+                
+                <div className="text-sm text-white/80">
+                  {isPlaying ? "Playing demo..." : "Play demo"}
+                </div>
+              </div>
             </div>
             
             {/* Grid pattern overlay to simulate AR space */}
             <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
             
-            {/* Molecule placeholder */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40">
+            {/* Molecule placeholder with enhanced animation */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 animate-float">
               <div className="absolute inset-0 rounded-full bg-moleculens-primary/20 animate-pulse-glow"></div>
               <div className="absolute inset-4 rounded-full border-2 border-moleculens-secondary/40 animate-rotate-slow"></div>
               <div className="absolute inset-10 rounded-full border-2 border-moleculens-primary/40 animate-rotate-slow" style={{animationDirection: 'reverse'}}></div>
