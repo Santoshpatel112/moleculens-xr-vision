@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Headset } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -34,9 +35,9 @@ const Navbar: React.FC = () => {
           <a href="#molecules" className="text-white/80 hover:text-white hover:text-glow transition-all">Molecules</a>
         </div>
         
-        <button className="bg-gradient-to-r from-moleculens-primary to-moleculens-secondary px-4 py-2 rounded-lg text-white font-medium hover:shadow-lg hover:shadow-moleculens-primary/20 transition-all">
+        <Link to="/demo" className="bg-gradient-to-r from-moleculens-primary to-moleculens-secondary px-4 py-2 rounded-lg text-white font-medium hover:shadow-lg hover:shadow-moleculens-primary/20 transition-all hover:scale-105">
           Launch AR
-        </button>
+        </Link>
       </div>
     </nav>
   );

@@ -2,6 +2,7 @@
 import React from 'react';
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom';
 
 interface MoleculeCardProps {
   name: string;
@@ -32,9 +33,9 @@ const MoleculeCard: React.FC<MoleculeCardProps> = ({ name, formula, description,
       
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-        <button className="btn-primary scale-90 group-hover:scale-100 transition-all flex items-center gap-2">
-          View in AR <ExternalLink className="h-4 w-4" />
-        </button>
+        <Link to="/demo" className="btn-primary scale-90 group-hover:scale-100 transition-all flex items-center gap-2">
+          View in AR <ExternalLink className="h-4 w-4 group-hover:rotate-45 transition-transform" />
+        </Link>
       </div>
     </div>
     
@@ -86,9 +87,11 @@ const MoleculeGallery: React.FC = () => {
         </div>
       </div>
       
-      {/* Background decorations */}
-      <div className="absolute -top-40 -left-40 w-80 h-80 bg-moleculens-primary/10 rounded-full blur-3xl"></div>
-      <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-moleculens-secondary/10 rounded-full blur-3xl"></div>
+      {/* Enhanced background decorations with animations */}
+      <div className="absolute -top-40 -left-40 w-80 h-80 bg-moleculens-primary/10 rounded-full blur-3xl animate-pulse-glow"></div>
+      <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-moleculens-secondary/10 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute top-1/3 right-10 w-20 h-20 bg-moleculens-primary/10 rounded-full blur-2xl animate-pulse-glow" style={{animationDelay: '1s'}}></div>
+      <div className="absolute bottom-1/3 left-10 w-32 h-32 bg-moleculens-secondary/10 rounded-full blur-2xl animate-float" style={{animationDelay: '0.5s'}}></div>
     </section>
   );
 };

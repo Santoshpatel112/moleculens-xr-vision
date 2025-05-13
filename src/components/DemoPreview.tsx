@@ -1,8 +1,15 @@
 
-import React from 'react';
-import { ExternalLink } from "lucide-react";
+import React, { useState } from 'react';
+import { ExternalLink, Play } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const DemoPreview: React.FC = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <section id="demo" className="section-padding relative overflow-hidden">
       <div className="container mx-auto container-padding">
@@ -20,13 +27,22 @@ const DemoPreview: React.FC = () => {
             {/* Video placeholder */}
             <div className="absolute inset-0 bg-gradient-to-br from-moleculens-dark to-moleculens-darker flex items-center justify-center">
               {/* Play button */}
-              <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                <div className="w-0 h-0 border-y-8 border-y-transparent border-l-[16px] border-l-white ml-1"></div>
-              </div>
+              <button 
+                onClick={togglePlay}
+                className={`w-20 h-20 rounded-full bg-white/10 flex items-center justify-center border border-white/20 transition-all hover:bg-white/20 hover:scale-110 ${isPlaying ? 'scale-90 opacity-0' : ''}`}
+              >
+                <Play className="w-8 h-8 text-white ml-1" />
+              </button>
             </div>
             
+            {isPlaying && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 border-4 border-moleculens-primary/80 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+            
             {/* AR overlay mockup */}
-            <div className="absolute bottom-4 left-4 p-3 bg-black/40 backdrop-blur-md rounded-lg flex items-center gap-2 border border-white/10">
+            <div className="absolute bottom-4 left-4 p-3 bg-black/40 backdrop-blur-md rounded-lg flex items-center gap-2 border border-white/10 animate-pulse">
               <Scan className="h-6 w-6 text-moleculens-primary" />
               <span>AR Mode Active</span>
             </div>
@@ -50,9 +66,10 @@ const DemoPreview: React.FC = () => {
         </div>
         
         <div className="mt-10 text-center">
-          <a href="/demo" className="btn-primary inline-flex items-center gap-2">
-            Try it Now <ExternalLink className="h-5 w-5" />
-          </a>
+          <Link to="/demo" className="btn-primary inline-flex items-center gap-2 group">
+            Try it Now 
+            <ExternalLink className="h-5 w-5 transform group-hover:rotate-45 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>
