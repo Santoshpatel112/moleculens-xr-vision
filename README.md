@@ -1,73 +1,91 @@
-# Welcome to your Lovable project
+# MoleculensXR Vision
 
-## Project info
+![MoleculensXR Vision](public/logo.png)
 
-**URL**: https://lovable.dev/projects/b50c64d5-e085-4ba7-886a-76d195d46c06
+## Overview
 
-## How can I edit this code?
+MoleculensXR Vision is a cutting-edge web application that brings molecular structures to life through Augmented Reality (AR) directly in your browser. Experience and interact with complex molecular structures in 3D space without the need for specialized apps or equipment.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Browser-Based AR**: Visualize molecular structures in augmented reality directly from your web browser
+- **No App Required**: Access the full AR experience without downloading additional software
+- **Interactive Exploration**: Rotate, zoom, and interact with molecular structures in 3D space
+- **Educational Tool**: Perfect for students, educators, and researchers in chemistry and related fields
+- **Responsive Design**: Works seamlessly across desktop and mobile devices
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b50c64d5-e085-4ba7-886a-76d195d46c06) and start prompting.
+## Technology Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React, TypeScript, Vite
+- **UI Components**: shadcn-ui, Tailwind CSS
+- **State Management**: React Query
+- **Routing**: React Router
+- **Authentication**: Custom auth implementation
+- **Styling**: Tailwind CSS with custom animations
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js (v16 or higher)
+- npm or bun package manager
 
-Follow these steps:
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd moleculens-xr-vision
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   bun install
+   ```
+
+3. Start the development server:
+   ```sh
+   npm run dev
+   # or
+   bun dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Usage
+
+1. Visit the homepage to learn about MoleculensXR Vision
+2. Navigate to the Demo page to experience the AR visualization
+3. Select from available molecular structures or upload your own
+4. Use your device camera to place the molecular structure in your environment
+5. Interact with the structure using touch or mouse controls
+
+## Deployment
+
+To build the application for production:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run build
+# or
+bun run build
 ```
 
-**Edit a file directly in GitHub**
+The built files will be in the `dist` directory, ready to be deployed to your hosting service of choice.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Contributing
 
-**Use GitHub Codespaces**
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## License
 
-## What technologies are used for this project?
+This project is licensed under the [MIT License](LICENSE).
 
-This project is built with:
+## Contact
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+For questions or support, please open an issue in the repository or contact the project maintainers.
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/b50c64d5-e085-4ba7-886a-76d195d46c06) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Built with ❤️ using [Lovable]
